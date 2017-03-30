@@ -1,8 +1,8 @@
 === WC Password Strength Settings ===
-Contributors: danielsantoro
+Contributors: danielsantoro, rynald0s
 Tags: WooCommerce, Users, Accounts, Passwords, Security
 Requires at least: 4.5.0
-Tested up to: 4.5.3
+Tested up to: 4.7.0
 Stable tag: trunk
 License: GPL
 License URI: http://www.gnu.org/licenses/gpl.html
@@ -42,6 +42,9 @@ A: You can submit a new issue on the [Public GitHub Repository](https://github.c
 A: Check out the developer's personal site at [DanielSantoro.com](http://danielsantoro.com).
 
 == Changelog ==
+
+= 9/28/2016 - Version 1.0.1 =
+ * Readme fixes, version check to WordPress 4.6 compatibility
 
 = 7/24/2016 - Version 1.0.0 =  
  * Initial Release
