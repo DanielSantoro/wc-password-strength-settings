@@ -1,33 +1,32 @@
 <?php
 /*
  Plugin Name: WC Password Strength Settings
- Plugin URI: https://github.com/DanielSantoro/wc-password-strength-settings
+ Plugin URI: https://danielsantoro.com/project/woocommerce-password-strength-settings-plugin
  Description: Allows administrators to set the required password strength or disable it entirely from the WooCommerce Accounts menu.
  Author: Daniel Santoro
  Author URI: https://danielsantoro.com
- Version: 1.1.0
+ Version: 1.2.0
  License: GPLv2 or later
  */
-<<<<<<< HEAD
 
 
 /**
  * Add custom action links on the plugin screen.
  */
-function ds_add_plugin_links( $links ) {
+function wcpss_add_plugin_links( $links ) {
     $new_links = '<a href="https://danielsantoro.com/project/woocommerce-password-strength-settings-plugin/?utm_source=pw-strength-plugin&utm_medium=plugin-overview-link" target="_blank">' . __( 'Documentation' ) . '</a>' . ' | ' . '<a href="https://danielsantoro.com/support/?utm_source=pw-strength-plugin&utm_medium=plugin-overview-link" target="_blank">' . __( 'Support' ) . '</a>';
     array_push( $links, $new_links );
   	return $links;
 }
 $plugin = plugin_basename( __FILE__ );
-add_filter( "plugin_action_links_$plugin", 'ds_add_plugin_links' );
+add_filter( "plugin_action_links_$plugin", 'wcpss_add_plugin_links' );
 
 
-/* Begin Plugin Code */
-=======
->>>>>>> origin/master
-add_filter( 'woocommerce_get_settings_account','ds_woo_account_setting' );
-function ds_woo_account_setting($settings) {
+/**
+ * Administration Options
+ */
+add_filter( 'woocommerce_get_settings_account','wcpss_woo_account_setting' );
+function wcpss_woo_account_setting($settings) {
     $settings[]=array( 'title' => __( 'User Password Strength Settings', 'woocommerce' ), 'type' => 'title', 'id' => 'account_password_options' );
     $settings[]=array(
                 'title'    => __( 'Strength Requirement', 'woocommerce' ),
@@ -110,14 +109,22 @@ function ds_woo_account_setting($settings) {
     $settings[]=array( 'type' => 'sectionend', 'id' => 'account_password_options' );
     return $settings;
 }
-add_filter('woocommerce_min_password_strength','ds_change_password_strength',30);
-function ds_change_password_strength() {
+
+/**
+ * Frontend Display
+ */
+add_filter('woocommerce_min_password_strength','wcpss_change_password_strength',30);
+function wcpss_change_password_strength() {
     $strength=get_option( 'woocommerce_myaccount_password_strength', null );
     return intval($strength);
     
 }
-add_action( 'wp_enqueue_scripts',  'ds_load_scripts',99 );
-function ds_load_scripts() {
+
+/**
+ * Localization
+ */
+add_action( 'wp_enqueue_scripts',  'wcpss_load_scripts',99 );
+function wcpss_load_scripts() {
     wp_localize_script( 'wc-password-strength-meter', 'pwsL10n', array(
         'empty' => __( get_option( 'woocommerce_password_strength_label_1', null ) ),
         'short' => __( get_option( 'woocommerce_password_strength_label_2', null ) ),
@@ -128,8 +135,8 @@ function ds_load_scripts() {
     ) );
 }
 
-add_filter( 'wc_password_strength_meter_params', 'ds_strength_meter_custom_strings' );
-function ds_strength_meter_custom_strings( $data ) {
+add_filter( 'wc_password_strength_meter_params', 'wcpss_strength_meter_custom_strings' );
+function wcpss_strength_meter_custom_strings( $data ) {
     $data_new = array(
         'i18n_password_error'   => esc_attr__( get_option( 'woocommerce_password_error', null ), 'woocommerce' ),
     );
