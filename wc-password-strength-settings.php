@@ -8,6 +8,7 @@
  Version: 1.1.0
  License: GPLv2 or later
  */
+<<<<<<< HEAD
 
 
 /**
@@ -23,6 +24,8 @@ add_filter( "plugin_action_links_$plugin", 'ds_add_plugin_links' );
 
 
 /* Begin Plugin Code */
+=======
+>>>>>>> origin/master
 add_filter( 'woocommerce_get_settings_account','ds_woo_account_setting' );
 function ds_woo_account_setting($settings) {
     $settings[]=array( 'title' => __( 'User Password Strength Settings', 'woocommerce' ), 'type' => 'title', 'id' => 'account_password_options' );
