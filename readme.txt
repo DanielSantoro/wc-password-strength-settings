@@ -51,15 +51,16 @@ A: Two places! You can check out the Danny's personal site at [DanielSantoro.com
 
 == Changelog ==
 
-= 7/7/2017 - Version 1.2.0 =
- * Added stylesheet to conditionally change the appearance of the text based on user settings
+= 8/1/2017 - Version 1.2.0 =
  * Added quick links in Plugin Overview page to Documentation and Support
+ * Added stylesheet to conditionally change the appearance of the text based on user settings
  * Added ability to change or disable the Password Hint messaging
- * Tested through WordPress 4.8 and WooCommerce 3.1.0
+ * Tested through WordPress 4.8 and WooCommerce 3.1.1
+ * Add multilingual support and zh_TW translated thanks to [AthenaTzeng](https://github.com/AthenaTzeng)
 
 = 4/5/2017 - Version 1.1.0 =
- * Added fields to allow for custom messaging as a user is inputting passwords.
- * Added rynald0s as a co-author, because he's a modern-day superhero.
+ * Added fields to allow for custom messaging as a user is inputting passwords
+ * Added rynald0s as a co-author, because he's a modern-day superhero
 
 = 3/28/2017 - Version 1.0.2 =
  * Readme fixes, added setting to change password strength meter labels / password error message
