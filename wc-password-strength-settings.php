@@ -5,7 +5,7 @@
  Description: Allows administrators to set the required password strength or disable it entirely from the WooCommerce Accounts menu.
  Author: Daniel Santoro
  Author URI: https://danielsantoro.com
- Version: 1.2.0
+ Version: 1.2.0-beta
  License: GPLv2 or later
  */
 
@@ -51,6 +51,7 @@ function wcpss_woo_account_setting($settings) {
 				'desc'     => __( 'Usually is not displayed - can be left as-is.', 'woocommerce' ),
 				'id'       => 'woocommerce_password_strength_label_1',
 				'type'     => 'text',
+				'css'      => 'min-width:350px;',
 				'default'  => 'empty',
 				'placeholder' => 'empty',
 				'desc_tip' => true,
@@ -61,6 +62,7 @@ function wcpss_woo_account_setting($settings) {
 				'desc'     => __( 'Will display until level 2 strength bypassed.', 'woocommerce' ),
 				'id'       => 'woocommerce_password_strength_label_2',
 				'type'     => 'text',
+				'css'      => 'min-width:350px;',
 				'default'  => 'Short: Your password is too short.',
 				'placeholder'  => 'Your password is too short.',
 				'desc_tip' => true,
@@ -71,6 +73,7 @@ function wcpss_woo_account_setting($settings) {
 				'desc'     => __( 'Will display until level 3 strength bypassed.', 'woocommerce' ),
 				'id'       => 'woocommerce_password_strength_label_3',
 				'type'     => 'text',
+				'css'      => 'min-width:350px;',
 				'default'  => 'Password Strength: Weak',
 				'placeholder'  => 'Password Strength: Weak',
 				'desc_tip' => true,
@@ -81,6 +84,7 @@ function wcpss_woo_account_setting($settings) {
 				'desc'     => __( 'Will display until level 4 strength bypassed.', 'woocommerce' ),
 				'id'       => 'woocommerce_password_strength_label_4',
 				'type'     => 'text',
+				'css'      => 'min-width:350px;',
 				'default'  => 'Password Strength: OK',
 				'placeholder'  => 'Password Strength: OK',
 				'desc_tip' => true,
@@ -91,6 +95,7 @@ function wcpss_woo_account_setting($settings) {
 				'desc'     => __( 'Will display until level 5 strength bypassed.', 'woocommerce' ),
 				'id'       => 'woocommerce_password_strength_label_5',
 				'type'     => 'text',
+				'css'      => 'min-width:350px;',
 				'default'  => 'Password Strength: Strong',
 				'placeholder'  => 'Password Strength: Strong',
 				'desc_tip' => true,
@@ -101,6 +106,7 @@ function wcpss_woo_account_setting($settings) {
 				'desc'     => __( 'Will display if there is an error in the user-selected password.', 'woocommerce' ),
 				'id'       => 'woocommerce_password_error',
 				'type'     => 'text',
+				'css'      => 'min-width:350px;',
 				'default'  => 'Please try again.',
 				'placeholder'  => 'Please try again.',
 				'desc_tip'  => true,
@@ -135,11 +141,11 @@ function wcpss_load_scripts() {
     ) );
 }
 
-add_filter( 'wc_password_strength_meter_params', 'wcpss_strength_meter_custom_strings' );
-function wcpss_strength_meter_custom_strings( $data ) {
+add_filter( 'wc_password_strength_meter_params', 'ds_strength_meter_custom_strings' );
+function ds_strength_meter_custom_strings( $data ) {
     $data_new = array(
         'i18n_password_error'   => esc_attr__( get_option( 'woocommerce_password_error', null ), 'woocommerce' ),
+        'i18n_password_hint'    => esc_attr__( get_option( 'woocommerce_password_hint', null ), 'woocommerce' ),
     );
-
     return array_merge( $data, $data_new );
 }
