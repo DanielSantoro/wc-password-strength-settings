@@ -53,13 +53,13 @@ function wcpss_woo_account_setting($settings) {
 				'type'     => 'text',
 				'css'      => 'min-width:350px;',
 				'default'  => 'empty',
-				'placeholder' => 'empty',
+				'placeholder' => 'Please enter a password to use for your account.',
 				'desc_tip' => true,
 			);
 
     $settings[]=array(
 				'title'    => __( 'Level 2 Message', 'woocommerce' ),
-				'desc'     => __( 'Will display until level 2 strength bypassed.', 'woocommerce' ),
+				'desc'     => __( 'Will display when level 2 strength requirements are met.', 'woocommerce' ),
 				'id'       => 'woocommerce_password_strength_label_2',
 				'type'     => 'text',
 				'css'      => 'min-width:350px;',
@@ -70,7 +70,7 @@ function wcpss_woo_account_setting($settings) {
 
     $settings[]=array(
 				'title'    => __( 'Level 3 Message', 'woocommerce' ),
-				'desc'     => __( 'Will display until level 3 strength bypassed.', 'woocommerce' ),
+				'desc'     => __( 'Will display when level 3 strength requirements are met.', 'woocommerce' ),
 				'id'       => 'woocommerce_password_strength_label_3',
 				'type'     => 'text',
 				'css'      => 'min-width:350px;',
@@ -81,7 +81,7 @@ function wcpss_woo_account_setting($settings) {
 
     $settings[]=array(
 				'title'    => __( 'Level 4 Message', 'woocommerce' ),
-				'desc'     => __( 'Will display until level 4 strength bypassed.', 'woocommerce' ),
+				'desc'     => __( 'Will display when level 4 strength requirements are met.', 'woocommerce' ),
 				'id'       => 'woocommerce_password_strength_label_4',
 				'type'     => 'text',
 				'css'      => 'min-width:350px;',
@@ -92,7 +92,7 @@ function wcpss_woo_account_setting($settings) {
 
     $settings[]=array(
 				'title'    => __( 'Level 5 Message', 'woocommerce' ),
-				'desc'     => __( 'Will display until level 5 strength bypassed.', 'woocommerce' ),
+				'desc'     => __( 'Will display when level 5 strength requirements are met.', 'woocommerce' ),
 				'id'       => 'woocommerce_password_strength_label_5',
 				'type'     => 'text',
 				'css'      => 'min-width:350px;',
