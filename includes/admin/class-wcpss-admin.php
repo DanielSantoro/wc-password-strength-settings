@@ -33,47 +33,13 @@ class wcpss_Admin {
         	wp_enqueue_script( 'wcpss-script-handle', WCPSS_INC_URL.'/wcpss-script.js', array( 'wp-color-picker' ), false, true );
     	}
 	}
-
-	public function wcpss_display_settings() {
-		
-		$woocommerce_level_2 = get_option( 'wcpss_color_2' );
-		$woocommerce_level_3 = get_option( 'wcpss_color_3' );
-		$woocommerce_level_4 = get_option( 'wcpss_color_4' );
-		$woocommerce_level_5 = get_option( 'wcpss_color_5' );
-		$wcpss_disable_emoticons = get_option( 'woocommerce_disable_emoticons' );
-		// $wcpss_disable_hint_text = get_option( 'woocommerce_disable_hint_text')	
-		
-		$css ='<style>';
-			if( !empty( $woocommerce_level_2 ) ) {
-				$css .= '.woocommerce-password-strength.short {color: '.$woocommerce_level_2.'}';
-			}
-			if( !empty( $woocommerce_level_3 ) ) {
-				$css .= '.woocommerce-password-strength.bad {color: '.$woocommerce_level_3.'}';
-			}
-			if( !empty( $woocommerce_level_4 ) ) {
-				$css .= '.woocommerce-password-strength.good {color: '.$woocommerce_level_4.'}';
-			}
-			if( !empty( $woocommerce_level_5 ) ) {
-				$css .= '.woocommerce-password-strength.strong {color: '.$woocommerce_level_5.'}';
-			}						
-			if(  $wcpss_disable_emoticons = true ) {
-				$css .= '.woocommerce-password-strength:after, .woocommerce-password-strength.good:after, .woocommerce-password-strength.strong:after {display: none;}';
-			} 
-			/* THIS ISN'T REQUIRED, AS THE HINT TEXT WILL NOT DISPLAY IF THE VALUE IS EMPTY
-			if( !empty( $wcpss_disable_hint_text ) ) {
-				$css .= '.woocommerce-password-hint{display: none;}';
-			}*/
-
-		$css .='</style>';
-		
-		echo $css;
-	}
 	
 	function wcpss_account_options( $settings ) {
 		
 		$dynamic_settings = array(
     		array(
 				'title' => __( 'User Password Strength Settings', 'woocommerce' ), 
+				'desc' => sprintf( __( 'Below, enter the minimum strength requirement, custom messages, text colors, and additional options. For information about each option, <a target="_blank" href="%s">please refer to the documentation</a>. <br><em>Note that "Level 1" values are intentionally hidden, as these are not meant to display anything.</em>', 'woocommerce' ), 'https://github.com/DanielSantoro/wc-password-strength-settings/wiki/Documentation'),
 				'type' => 'title',
 				'class' => 'title',
 				'id' => 'account_password_options' 
@@ -95,16 +61,7 @@ class wcpss_Admin {
 			        '4'=>__( 'Level 5 - Strong', 'woocommerce' ),
 			    )
 			),
-			array(
-				'title'    => __( 'Level 1 Message', 'woocommerce' ),
-				'desc'     => __( 'Usually is not displayed - can be left as-is.', 'woocommerce' ),
-				'id'       => 'woocommerce_password_strength_label_1',
-				'type'     => 'text',
-				'css'      => 'min-width:350px;',
-				'default'  => 'empty',
-				'placeholder' => 'Please enter a password to use for your account.',
-				'desc_tip' => true,
-			),
+			// Level 1 values intentionally removed - they are not used for any display.
 			array(
 				'title'    => __( 'Level 2 Message', 'woocommerce' ),
 				'desc'     => __( 'Will display when level 2 strength requirements are met.', 'woocommerce' ),
@@ -206,7 +163,7 @@ class wcpss_Admin {
 				'placeholder'	=> ''
 			),
 			array(
-				'title'    => __( "Hint Text (Leave Blank to Disable)", 'woocommerce' ),				
+				'title'    => __( "Password Hint Text", 'woocommerce' ),				
 				'id'       => 'woocommerce_hint_text',
 				'type'     => 'text',
 				'desc'		=> __( 'Text to encourage users to make a stronger password. Will only appear on passwords with a level lower than 4.', 'woocommerce' ),
@@ -215,20 +172,19 @@ class wcpss_Admin {
 				'css'	=> 'min-width:350px;',
 				'desc_tip'	=> true,
 			),
-			// THIS FIELD IS PRESENT, BUT NOT MEANT FOR USER DISPLAY
-			// array(
-			// 	'title'    => __( 'Disable Hint', 'woocommerce' ),				
-			// 	'id'       => 'woocommerce_disable_hint_text',
-			// 	'type'     => 'checkbox',
-			// 	'desc'	=> __( 'If checked, the hint text will be hidden (even custom hint text).', 'woocommerce' ),
-			// 	'desc_tip'	=> true,
-			// ),
 			array(
-				'title'    => __( 'Disable Emoticons', 'woocommerce' ),				
-				'id'       => 'woocommerce_disable_emoticons',
+				'title'    => __( 'Disable Hint', 'woocommerce' ),
+				'desc'	=> __( 'If checked, the hint text will be hidden (even custom hint text).', 'woocommerce' ),	
+				'id'       => 'woocommerce_disable_hint_text',
+				'default'	=> 'no',
 				'type'     => 'checkbox',
-				'desc'	=> __( 'If checked, the smiley face emoticons will be hidden.', 'woocommerce' ),
-				'desc_tip'	=> true,
+			),
+			array(
+				'title'    => __( 'Disable Emoticons', 'woocommerce' ),
+				'desc'	=> __( 'If checked, the smiley face emoticons will be hidden.', 'woocommerce' ),			
+				'id'       => 'woocommerce_disable_emoticons',
+				'default'	=> 'no',
+				'type'     => 'checkbox',
 			),
 			array( 'type' => 'sectionend', 'id' => 'account_page_wcpss_options' ),
 			
@@ -237,6 +193,38 @@ class wcpss_Admin {
 		$settings = array_merge( $settings, $dynamic_settings );
 		
 		return $settings;
+	}
+
+		public function wcpss_display_settings() {
+		
+		$woocommerce_level_2 = get_option( 'wcpss_color_2' );
+		$woocommerce_level_3 = get_option( 'wcpss_color_3' );
+		$woocommerce_level_4 = get_option( 'wcpss_color_4' );
+		$woocommerce_level_5 = get_option( 'wcpss_color_5' );
+		
+		$css ='<style>';
+			if( !empty( $woocommerce_level_2 ) ) {
+				$css .= '.woocommerce-password-strength.short {color: '.$woocommerce_level_2.'}';
+			}
+			if( !empty( $woocommerce_level_3 ) ) {
+				$css .= '.woocommerce-password-strength.bad {color: '.$woocommerce_level_3.'}';
+			}
+			if( !empty( $woocommerce_level_4 ) ) {
+				$css .= '.woocommerce-password-strength.good {color: '.$woocommerce_level_4.'}';
+			}
+			if( !empty( $woocommerce_level_5 ) ) {
+				$css .= '.woocommerce-password-strength.strong {color: '.$woocommerce_level_5.'}';
+			}						
+			if( get_option( 'woocommerce_disable_emoticons' ) === 'yes' ) {
+				$css .= '.woocommerce-password-strength:after, .woocommerce-password-strength.good:after, .woocommerce-password-strength.strong:after {display: none;}';
+			} 
+			if( get_option( 'woocommerce_disable_hint_text') === 'yes' ) {
+				$css .= '.woocommerce-password-strength {display: inline-block;float: right;}.woocommerce-password-hint{display: none;}';
+			}
+
+		$css .='</style>';
+		
+		echo $css;
 	}
 
 	/**

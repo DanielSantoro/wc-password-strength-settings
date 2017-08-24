@@ -2,10 +2,10 @@
 /*
  Plugin Name: WC Password Strength Settings
  Plugin URI: https://danielsantoro.com/project/woocommerce-password-strength-settings-plugin
- Description: Allows administrators to set the required password strength or disable it entirely from the WooCommerce Accounts menu.
+ Description: Allows administrators to set the required password strength for new accounts, change messaging and display options, or disable requirements entirely from the WooCommerce Accounts menu.
  Author: Daniel Santoro
  Author URI: https://danielsantoro.com
- Version: 1.2.0
+ Version: 2.0.0
  License: GPLv2 or later
  */
 
@@ -16,28 +16,28 @@
  * @since 1.2.0
  */
 if( !defined( 'WCPSS_DIR' ) ) {
-  define( 'WCPSS_DIR', dirname( __FILE__ ) );      // Plugin directory
+  define( 'WCPSS_DIR', dirname( __FILE__ ) );           // Plugin directory
 }
 if( !defined( 'WCPSS_VERSION' ) ) {
-  define( 'WCPSS_VERSION', '1.2.0' );      // Plugin Version
+  define( 'WCPSS_VERSION', '1.2.0' );                   // Plugin Version
 }
 if( !defined( 'WCPSS_URL' ) ) {
-  define( 'WCPSS_URL', plugin_dir_url( __FILE__ ) );   // Plugin URL
+  define( 'WCPSS_URL', plugin_dir_url( __FILE__ ) );    // Plugin URL
 }
 if( !defined( 'WCPSS_INC_DIR' ) ) {
-  define( 'WCPSS_INC_DIR', WCPSS_DIR.'/includes' );   // Plugin 'include' directory
+  define( 'WCPSS_INC_DIR', WCPSS_DIR.'/includes' );     // Plugin 'include' directory
 }
 if( !defined( 'WCPSS_INC_URL' ) ) {
-  define( 'WCPSS_INC_URL', WCPSS_URL.'includes' );    // Plugin 'include' directory URL
+  define( 'WCPSS_INC_URL', WCPSS_URL.'includes' );      // Plugin 'include' directory URL
 }
 if( !defined( 'WCPSS_ADMIN_DIR' ) ) {
   define( 'WCPSS_ADMIN_DIR', WCPSS_INC_DIR.'/admin' );  // Plugin 'admin' directory
 }
 if(!defined('WCPSS_PREFIX')) {
-  define('WCPSS_PREFIX', 'WCPSS'); // Plugin Prefix
+  define('WCPSS_PREFIX', 'WCPSS');                      // Plugin Prefix
 }
 if(!defined('WCPSS_VAR_PREFIX')) {
-  define('WCPSS_VAR_PREFIX', '_WCPSS_'); // Variable Prefix
+  define('WCPSS_VAR_PREFIX', '_WCPSS_');                // Variable Prefix
 }
 
 
@@ -46,8 +46,9 @@ if(!defined('WCPSS_VAR_PREFIX')) {
  */
 define( 'project_domain', 'https://danielsantoro.com' );
 define( 'analytics_source', '?utm_source=pw-strength-plugin&utm_medium=plugin-overview-link' );
+define( 'github', 'https://github.com/DanielSantoro/wc-password-strength-settings/' );
 function wcpss_add_plugin_links( $links ) {
-    $new_links = '<a href="'.project_domain.'/project/woocommerce-password-strength-settings-plugin/'.analytics_source.'" target="_blank">' . __( 'Documentation' ) . '</a>' . ' | ' . '<a href="'.project_domain.'/support/'.analytics_source.'" target="_blank">' . __( 'Support' ) . '</a>';
+    $new_links = '<a href="'.github.'/wiki/Documentation/" target="_blank">' . __( 'Documentation' ) . '</a>' . ' | ' . '<a href="'.project_domain.'/support/'.analytics_source.'" target="_blank">' . __( 'Support' ) . '</a>';
     array_push( $links, $new_links );
   	return $links;
 }
@@ -71,24 +72,13 @@ function wcpss_uninstall(){
 }
 
 /**
- * Disable Password Hint
+ * Global Class
  */
-
-add_filter( 'password_hint', 'wcpss_change_password_hint' );
-function wcpss_change_password_hint( $hint ) {
-  
-  $disable_hint_text  = get_option( 'woocommerce_disable_hint_text' );
-  if( !empty( $disable_hint_text ) ) {
-    $woocommerce_hint_text  = get_option( 'woocommerce_hint_text' );
-    $hint = $woocommerce_hint_text;
-  }
-  return $hint;
-}
-
-// Global variables
 global $wcpss_admin;
 
-// Admin class to handle most of the administration panel functionality
+/**
+ * Administration Panel Class
+ */
 include_once( WCPSS_ADMIN_DIR.'/class-wcpss-admin.php' );
 $wcpss_admin = new wcpss_Admin();
 $wcpss_admin->add_hooks();
@@ -104,6 +94,24 @@ function wcpss_change_password_strength() {
     
 }
 
+/**
+ * Change Password Hint Text based on  User Input
+ */
+
+add_filter( 'password_hint', 'wcpss_change_password_hint' );
+function wcpss_change_password_hint( $hint ) {
+  
+  $disable_hint_text  = get_option( 'woocommerce_disable_hint_text' );
+  if( !empty( $disable_hint_text ) ) {
+    $woocommerce_hint_text  = get_option( 'woocommerce_hint_text' );
+    $hint = $woocommerce_hint_text;
+  }
+  return $hint;
+}
+
+/** 
+ * Display Custom Messaging
+ */
 add_action( 'wp_enqueue_scripts',  'wcpss_load_scripts',99 );
 function wcpss_load_scripts() {
     wp_localize_script( 'wc-password-strength-meter', 'pwsL10n', array(
@@ -117,7 +125,7 @@ function wcpss_load_scripts() {
 }
 
 /**
- * Localization
+ * Localization - Non-functional since 2.0. Needs re-work.
  */
 
 // add_filter( 'wc_password_strength_meter_params', 'wcpss_strength_meter_custom_strings' );
