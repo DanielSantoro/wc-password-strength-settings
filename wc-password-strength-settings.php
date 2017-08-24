@@ -5,16 +5,49 @@
  Description: Allows administrators to set the required password strength or disable it entirely from the WooCommerce Accounts menu.
  Author: Daniel Santoro
  Author URI: https://danielsantoro.com
- Version: 1.2.0-beta
+ Version: 1.2.0
  License: GPLv2 or later
  */
+
+/**
+ * Plugin Definitions
+ * 
+ * @package WC Password Strength Settings
+ * @since 1.2.0
+ */
+if( !defined( 'WCPSS_DIR' ) ) {
+  define( 'WCPSS_DIR', dirname( __FILE__ ) );      // Plugin directory
+}
+if( !defined( 'WCPSS_VERSION' ) ) {
+  define( 'WCPSS_VERSION', '1.2.0' );      // Plugin Version
+}
+if( !defined( 'WCPSS_URL' ) ) {
+  define( 'WCPSS_URL', plugin_dir_url( __FILE__ ) );   // Plugin URL
+}
+if( !defined( 'WCPSS_INC_DIR' ) ) {
+  define( 'WCPSS_INC_DIR', WCPSS_DIR.'/includes' );   // Plugin 'include' directory
+}
+if( !defined( 'WCPSS_INC_URL' ) ) {
+  define( 'WCPSS_INC_URL', WCPSS_URL.'includes' );    // Plugin 'include' directory URL
+}
+if( !defined( 'WCPSS_ADMIN_DIR' ) ) {
+  define( 'WCPSS_ADMIN_DIR', WCPSS_INC_DIR.'/admin' );  // Plugin 'admin' directory
+}
+if(!defined('WCPSS_PREFIX')) {
+  define('WCPSS_PREFIX', 'WCPSS'); // Plugin Prefix
+}
+if(!defined('WCPSS_VAR_PREFIX')) {
+  define('WCPSS_VAR_PREFIX', '_WCPSS_'); // Variable Prefix
+}
 
 
 /**
  * Add custom action links on the plugin screen.
  */
+define( 'project_domain', 'https://danielsantoro.com' );
+define( 'analytics_source', '?utm_source=pw-strength-plugin&utm_medium=plugin-overview-link' );
 function wcpss_add_plugin_links( $links ) {
-    $new_links = '<a href="https://danielsantoro.com/project/woocommerce-password-strength-settings-plugin/?utm_source=pw-strength-plugin&utm_medium=plugin-overview-link" target="_blank">' . __( 'Documentation' ) . '</a>' . ' | ' . '<a href="https://danielsantoro.com/support/?utm_source=pw-strength-plugin&utm_medium=plugin-overview-link" target="_blank">' . __( 'Support' ) . '</a>';
+    $new_links = '<a href="'.project_domain.'/project/woocommerce-password-strength-settings-plugin/'.analytics_source.'" target="_blank">' . __( 'Documentation' ) . '</a>' . ' | ' . '<a href="'.project_domain.'/support/'.analytics_source.'" target="_blank">' . __( 'Support' ) . '</a>';
     array_push( $links, $new_links );
   	return $links;
 }
@@ -23,101 +56,46 @@ add_filter( "plugin_action_links_$plugin", 'wcpss_add_plugin_links' );
 
 
 /**
- * Administration Options
+ * Activation & Deactivation Hooks
  */
-add_filter( 'woocommerce_get_settings_account','wcpss_woo_account_setting' );
-function wcpss_woo_account_setting($settings) {
-    $settings[]=array( 'title' => __( 'User Password Strength Settings', 'woocommerce' ), 'type' => 'title', 'id' => 'account_password_options' );
-    $settings[]=array(
-                'title'    => __( 'Strength Requirement', 'woocommerce' ),
-                'desc'     => __( 'Select the minimum strength of your user passwords. Level 4 = Default.', 'woocommerce' ),
-                'id'       => 'woocommerce_myaccount_password_strength',
-                'type'     => 'select',
-                'default'  => '',
-                'class'    => 'wc-enhanced-select',
-                'css'      => 'min-width:350px;',
-                'desc_tip' => true,
-                'options'  =>array(
-                    '0'=>__( 'Level 1 - Anything', 'woocommerce' ),
-                    '1'=>__( 'Level 2 - Weakest', 'woocommerce' ),
-                    '2'=>__( 'Level 3 - Weak', 'woocommerce' ),
-                    '3'=>__( 'Level 4 - Medium', 'woocommerce' ),
-                    '4'=>__( 'Level 5 - Strong', 'woocommerce' ),
-                ),
-            );
+register_activation_hook( __FILE__, 'wcpss_install' );
 
-    $settings[]=array(
-				'title'    => __( 'Level 1 Message', 'woocommerce' ),
-				'desc'     => __( 'Usually is not displayed - can be left as-is.', 'woocommerce' ),
-				'id'       => 'woocommerce_password_strength_label_1',
-				'type'     => 'text',
-				'css'      => 'min-width:350px;',
-				'default'  => 'empty',
-				'placeholder' => 'Please enter a password to use for your account.',
-				'desc_tip' => true,
-			);
+function wcpss_install(){
+  
+}
 
-    $settings[]=array(
-				'title'    => __( 'Level 2 Message', 'woocommerce' ),
-				'desc'     => __( 'Will display when level 2 strength requirements are met.', 'woocommerce' ),
-				'id'       => 'woocommerce_password_strength_label_2',
-				'type'     => 'text',
-				'css'      => 'min-width:350px;',
-				'default'  => 'Short: Your password is too short.',
-				'placeholder'  => 'Your password is too short.',
-				'desc_tip' => true,
-			);
+register_deactivation_hook( __FILE__, 'wcpss_uninstall');
 
-    $settings[]=array(
-				'title'    => __( 'Level 3 Message', 'woocommerce' ),
-				'desc'     => __( 'Will display when level 3 strength requirements are met.', 'woocommerce' ),
-				'id'       => 'woocommerce_password_strength_label_3',
-				'type'     => 'text',
-				'css'      => 'min-width:350px;',
-				'default'  => 'Password Strength: Weak',
-				'placeholder'  => 'Password Strength: Weak',
-				'desc_tip' => true,
-			);
-
-    $settings[]=array(
-				'title'    => __( 'Level 4 Message', 'woocommerce' ),
-				'desc'     => __( 'Will display when level 4 strength requirements are met.', 'woocommerce' ),
-				'id'       => 'woocommerce_password_strength_label_4',
-				'type'     => 'text',
-				'css'      => 'min-width:350px;',
-				'default'  => 'Password Strength: OK',
-				'placeholder'  => 'Password Strength: OK',
-				'desc_tip' => true,
-			);
-
-    $settings[]=array(
-				'title'    => __( 'Level 5 Message', 'woocommerce' ),
-				'desc'     => __( 'Will display when level 5 strength requirements are met.', 'woocommerce' ),
-				'id'       => 'woocommerce_password_strength_label_5',
-				'type'     => 'text',
-				'css'      => 'min-width:350px;',
-				'default'  => 'Password Strength: Strong',
-				'placeholder'  => 'Password Strength: Strong',
-				'desc_tip' => true,
-			);
-
-        $settings[]=array(
-				'title'    => __( 'Error Message', 'woocommerce' ),
-				'desc'     => __( 'Will display if there is an error in the user-selected password.', 'woocommerce' ),
-				'id'       => 'woocommerce_password_error',
-				'type'     => 'text',
-				'css'      => 'min-width:350px;',
-				'default'  => 'Please try again.',
-				'placeholder'  => 'Please try again.',
-				'desc_tip'  => true,
-			);
-
-    $settings[]=array( 'type' => 'sectionend', 'id' => 'account_password_options' );
-    return $settings;
+function wcpss_uninstall(){
+  
 }
 
 /**
- * Frontend Display
+ * Disable Password Hint
+ */
+
+add_filter( 'password_hint', 'wcpss_change_password_hint' );
+function wcpss_change_password_hint( $hint ) {
+  
+  $disable_hint_text  = get_option( 'woocommerce_disable_hint_text' );
+  if( !empty( $disable_hint_text ) ) {
+    $woocommerce_hint_text  = get_option( 'woocommerce_hint_text' );
+    $hint = $woocommerce_hint_text;
+  }
+  return $hint;
+}
+
+// Global variables
+global $wcpss_admin;
+
+// Admin class to handle most of the administration panel functionality
+include_once( WCPSS_ADMIN_DIR.'/class-wcpss-admin.php' );
+$wcpss_admin = new wcpss_Admin();
+$wcpss_admin->add_hooks();
+
+
+/**
+ * Enforce Password Strength
  */
 add_filter('woocommerce_min_password_strength','wcpss_change_password_strength',30);
 function wcpss_change_password_strength() {
@@ -126,9 +104,6 @@ function wcpss_change_password_strength() {
     
 }
 
-/**
- * Localization
- */
 add_action( 'wp_enqueue_scripts',  'wcpss_load_scripts',99 );
 function wcpss_load_scripts() {
     wp_localize_script( 'wc-password-strength-meter', 'pwsL10n', array(
@@ -141,11 +116,15 @@ function wcpss_load_scripts() {
     ) );
 }
 
-add_filter( 'wc_password_strength_meter_params', 'ds_strength_meter_custom_strings' );
-function ds_strength_meter_custom_strings( $data ) {
-    $data_new = array(
-        'i18n_password_error'   => esc_attr__( get_option( 'woocommerce_password_error', null ), 'woocommerce' ),
-        'i18n_password_hint'    => esc_attr__( get_option( 'woocommerce_password_hint', null ), 'woocommerce' ),
-    );
-    return array_merge( $data, $data_new );
-}
+/**
+ * Localization
+ */
+
+// add_filter( 'wc_password_strength_meter_params', 'wcpss_strength_meter_custom_strings' );
+// function wcpss_strength_meter_custom_strings( $data ) {
+//     $data_new = array(
+//         'i18n_password_error'   => esc_attr__( get_option( 'woocommerce_password_error', null ), 'woocommerce' ),
+//         'i18n_password_hint'    => esc_attr__( get_option( 'woocommerce_password_hint', null ), 'woocommerce' ),
+//     );
+//     return array_merge( $data, $data_new );
+// }
