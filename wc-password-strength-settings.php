@@ -48,7 +48,7 @@ define( 'project_domain', 'https://danielsantoro.com' );
 define( 'analytics_source', '?utm_source=pw-strength-plugin&utm_medium=plugin-overview-link' );
 define( 'github', 'https://github.com/DanielSantoro/wc-password-strength-settings/' );
 function wcpss_add_plugin_links( $links ) {
-    $new_links = '<a href="'.github.'/wiki/Documentation/" target="_blank">' . __( 'Documentation' ) . '</a>' . ' | ' . '<a href="'.project_domain.'/support/'.analytics_source.'" target="_blank">' . __( 'Support' ) . '</a>';
+    $new_links = '<a href="'.github.'wiki/Documentation/" target="_blank">' . __( 'Documentation' ) . '</a>' . ' | ' . '<a href="'.project_domain.'/support/'.analytics_source.'" target="_blank">' . __( 'Support' ) . '</a>';
     array_push( $links, $new_links );
   	return $links;
 }

@@ -39,7 +39,7 @@ class wcpss_Admin {
 		$dynamic_settings = array(
     		array(
 				'title' => __( 'User Password Strength Settings', 'woocommerce' ), 
-				'desc' => sprintf( __( 'Below, enter the minimum strength requirement, custom messages, text colors, and additional options. For information about each option, <a target="_blank" href="%s">please refer to the documentation</a>. <br><em>Note that "Level 1" values are intentionally hidden, as these are not meant to display anything.</em>', 'woocommerce' ), 'https://github.com/DanielSantoro/wc-password-strength-settings/wiki/Documentation'),
+				'desc' => sprintf( __( 'Below, enter the minimum strength requirement, custom messages, text colors, and additional options. For information about each option, <a target="_blank" href="%s">please refer to the documentation</a>.', 'woocommerce' ), 'https://github.com/DanielSantoro/wc-password-strength-settings/wiki/Documentation'),
 				'type' => 'title',
 				'class' => 'title',
 				'id' => 'account_password_options' 
@@ -54,17 +54,18 @@ class wcpss_Admin {
 			    'css'      => 'min-width:350px;',
 			    'desc_tip' => true,
 			    'options'  =>array(
-			        '0'=>__( 'Level 1 - Anything', 'woocommerce' ),
-			        '1'=>__( 'Level 2 - Weakest', 'woocommerce' ),
-			        '2'=>__( 'Level 3 - Weak', 'woocommerce' ),
-			        '3'=>__( 'Level 4 - Medium', 'woocommerce' ),
-			        '4'=>__( 'Level 5 - Strong', 'woocommerce' ),
+			        '0'=>__( 'Level 0 - Anything', 'woocommerce' ),
+			        '1'=>__( 'Level 1 - Weakest', 'woocommerce' ),
+			        '2'=>__( 'Level 2 - Weak', 'woocommerce' ),
+			        '3'=>__( 'Level 3 - Medium (Default)', 'woocommerce' ),
+			        '4'=>__( 'Level 4 - Strong', 'woocommerce' ),
 			    )
 			),
 			// Level 1 values intentionally removed - they are not used for any display.
+			// Note that the Title values will not be equivalent to the strength label for this reason, as Level 1 is no restriction at all.
 			array(
-				'title'    => __( 'Level 2 Message', 'woocommerce' ),
-				'desc'     => __( 'Will display when level 2 strength requirements are met.', 'woocommerce' ),
+				'title'    => __( 'Level 1 Message', 'woocommerce' ),
+				'desc'     => __( 'Will display when level 1 strength requirements are met.', 'woocommerce' ),
 				'id'       => 'woocommerce_password_strength_label_2',
 				'type'     => 'text',
 				'css'      => 'min-width:350px;',
@@ -73,8 +74,28 @@ class wcpss_Admin {
 				'desc_tip' => true,
 			),
 			array(
-				'title'    => __( 'Level 2 Text Color', 'wcpss' ),				
+				'title'    => __( 'Level 1 Text Color', 'wcpss' ),				
 				'id'       => 'wcpss_color_2',
+				'class' => 'color-field',
+				'type'     => 'text',
+				'desc'		=> __( 'Text color when the password strength hits level 1. Leave blank for default.', 'woocommerce' ),
+				'desc_tip'	=>	true,
+				'default'	=> '#e2401c',
+				'placeholder'	=> ''
+			),
+			array(
+				'title'    => __( 'Level 2 Message', 'woocommerce' ),
+				'desc'     => __( 'Will display when level 2 strength requirements are met.', 'woocommerce' ),
+				'id'       => 'woocommerce_password_strength_label_3',
+				'type'     => 'text',
+				'css'      => 'min-width:350px;',
+				'default'  => 'Password Strength: Weak',
+				'placeholder'  => 'Password Strength: Weak',
+				'desc_tip' => true,
+			),
+			array(
+				'title'    => __( 'Level 2 Text Color', 'wcpss' ),				
+				'id'       => 'wcpss_color_3',
 				'class' => 'color-field',
 				'type'     => 'text',
 				'desc'		=> __( 'Text color when the password strength hits level 2. Leave blank for default.', 'woocommerce' ),
@@ -85,26 +106,6 @@ class wcpss_Admin {
 			array(
 				'title'    => __( 'Level 3 Message', 'woocommerce' ),
 				'desc'     => __( 'Will display when level 3 strength requirements are met.', 'woocommerce' ),
-				'id'       => 'woocommerce_password_strength_label_3',
-				'type'     => 'text',
-				'css'      => 'min-width:350px;',
-				'default'  => 'Password Strength: Weak',
-				'placeholder'  => 'Password Strength: Weak',
-				'desc_tip' => true,
-			),
-			array(
-				'title'    => __( 'Level 3 Text Color', 'wcpss' ),				
-				'id'       => 'wcpss_color_3',
-				'class' => 'color-field',
-				'type'     => 'text',
-				'desc'		=> __( 'Text color when the password strength hits level 3. Leave blank for default.', 'woocommerce' ),
-				'desc_tip'	=>	true,
-				'default'	=> '#e2401c',
-				'placeholder'	=> ''
-			),
-			array(
-				'title'    => __( 'Level 4 Message', 'woocommerce' ),
-				'desc'     => __( 'Will display when level 4 strength requirements are met.', 'woocommerce' ),
 				'id'       => 'woocommerce_password_strength_label_4',
 				'type'     => 'text',
 				'css'      => 'min-width:350px;',
@@ -113,18 +114,18 @@ class wcpss_Admin {
 				'desc_tip' => true,
 			),
 			array(
-				'title'    => __( 'Level 4 Text Color', 'wcpss' ),				
+				'title'    => __( 'Level 3 Text Color', 'wcpss' ),				
 				'id'       => 'wcpss_color_4',
 				'class' => 'color-field',
 				'type'     => 'text',
-				'desc'		=> __( 'Text color when the password strength hits level 4. Leave blank for default.', 'woocommerce' ),
+				'desc'		=> __( 'Text color when the password strength hits level 3. Leave blank for default.', 'woocommerce' ),
 				'desc_tip'	=>	true,
 				'default'	=> '#3d9cd2',
 				'placeholder'	=> ''
 			),
 			array(
-				'title'    => __( 'Level 5 Message', 'woocommerce' ),
-				'desc'     => __( 'Will display when level 5 strength requirements are met.', 'woocommerce' ),
+				'title'    => __( 'Level 4 Message', 'woocommerce' ),
+				'desc'     => __( 'Will display when level 4 strength requirements are met.', 'woocommerce' ),
 				'id'       => 'woocommerce_password_strength_label_5',
 				'type'     => 'text',
 				'css'      => 'min-width:350px;',
@@ -133,11 +134,11 @@ class wcpss_Admin {
 				'desc_tip' => true,
 			),
 			array(
-				'title'    => __( 'Level 5 Text Color', 'wcpss' ),				
+				'title'    => __( 'Level 4 Text Color', 'wcpss' ),				
 				'id'       => 'wcpss_color_5',
 				'class' => 'color-field',
 				'type'     => 'text',
-				'desc'		=> __( 'Text color when the password strength hits level 5. Leave blank for default.', 'woocommerce' ),
+				'desc'		=> __( 'Text color when the password strength hits level 4. Leave blank for default.', 'woocommerce' ),
 				'desc_tip'	=>	true,
 				'default'	=> '#0f834d',
 				'placeholder'	=> ''
@@ -166,7 +167,7 @@ class wcpss_Admin {
 				'title'    => __( "Password Hint Text", 'woocommerce' ),				
 				'id'       => 'woocommerce_hint_text',
 				'type'     => 'text',
-				'desc'		=> __( 'Text to encourage users to make a stronger password. Will only appear on passwords with a level lower than 4.', 'woocommerce' ),
+				'desc'		=> __( 'Text to encourage users to make a stronger password. Will only appear on passwords with a level lower than your requirement.', 'woocommerce' ),
 				'default'	=>	'Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! " ? $ % ^ & ).',
 				'placeholder'	=> 'Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! " ? $ % ^ & ).',
 				'css'	=> 'min-width:350px;',
