@@ -19,7 +19,7 @@ if( !defined( 'WCPSS_DIR' ) ) {
   define( 'WCPSS_DIR', dirname( __FILE__ ) );           // Plugin directory
 }
 if( !defined( 'WCPSS_VERSION' ) ) {
-  define( 'WCPSS_VERSION', '1.2.0' );                   // Plugin Version
+  define( 'WCPSS_VERSION', '2.0.0' );                   // Plugin Version
 }
 if( !defined( 'WCPSS_URL' ) ) {
   define( 'WCPSS_URL', plugin_dir_url( __FILE__ ) );    // Plugin URL
