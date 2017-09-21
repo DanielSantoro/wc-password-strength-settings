@@ -5,8 +5,12 @@
  Description: Allows administrators to set the required password strength for new accounts, change messaging and display options, or disable requirements entirely from the WooCommerce Accounts menu.
  Author: Daniel Santoro
  Author URI: https://danielsantoro.com
- Version: 2.0.0
+ Version: 2.0.1
  License: GPLv2 or later
+ Text Domain: wc-password-strength-settings
+ Domain Path: /languages
+ WC requires at least: 3.0.0
+ WC tested up to: 3.2.0
  */
 
 /**
@@ -19,7 +23,7 @@ if( !defined( 'WCPSS_DIR' ) ) {
   define( 'WCPSS_DIR', dirname( __FILE__ ) );           // Plugin directory
 }
 if( !defined( 'WCPSS_VERSION' ) ) {
-  define( 'WCPSS_VERSION', '2.0.0' );                   // Plugin Version
+  define( 'WCPSS_VERSION', '2.0.1' );                   // Plugin Version
 }
 if( !defined( 'WCPSS_URL' ) ) {
   define( 'WCPSS_URL', plugin_dir_url( __FILE__ ) );    // Plugin URL
@@ -83,7 +87,6 @@ include_once( WCPSS_ADMIN_DIR.'/class-wcpss-admin.php' );
 $wcpss_admin = new wcpss_Admin();
 $wcpss_admin->add_hooks();
 
-
 /**
  * Enforce Password Strength
  */
@@ -97,7 +100,6 @@ function wcpss_change_password_strength() {
 /**
  * Change Password Hint Text based on  User Input
  */
-
 add_filter( 'password_hint', 'wcpss_change_password_hint' );
 function wcpss_change_password_hint( $hint ) {
   
@@ -125,7 +127,7 @@ function wcpss_load_scripts() {
 }
 
 /**
- * Localization - Non-functional since 2.0. Needs re-work.
+ * Localization - Non-functional since 2.0. Needs re-work, legacy code saved as placeholder.
  */
 
 // add_filter( 'wc_password_strength_meter_params', 'wcpss_strength_meter_custom_strings' );
