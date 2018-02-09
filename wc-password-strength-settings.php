@@ -5,7 +5,7 @@
  Description: Allows administrators to set the required password strength for new accounts, change messaging and display options, or disable requirements entirely from the WooCommerce Accounts menu.
  Author: Daniel Santoro
  Author URI: https://danielsantoro.com
- Version: 2.0.1
+ Version: 2.0.2
  License: GPLv2 or later
  Text Domain: wc-password-strength-settings
  Domain Path: /languages
