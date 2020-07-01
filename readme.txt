@@ -1,8 +1,8 @@
 === WC Password Strength Settings ===
-Contributors: danielsantoro, rynald0s
+Contributors: danielsantoro
 Tags: WooCommerce, Users, Accounts, Passwords, Security
 Requires at least: 4.5.0
-Tested up to: 5.2.0
+Tested up to: 5.4.2
 Stable tag: trunk
 License: GPL
 License URI: http://www.gnu.org/licenses/gpl.html
@@ -17,7 +17,20 @@ WooCommerce has an integrated Password Strength Meter which forces users to use 
 
 = What's New? =
 
-2.1.0 finally enables localization for all backend strings! I can't speak other languages, however, so any localization assistance is more than welcome - [if you can contribute to localization, head over to GitHub](https://github.com/DanielSantoro/wc-password-strength-settings).
+2.2.0 adds automated translations for the following languages in addition to English:
+ - Czech
+ - German
+ - Spanish
+ - French
+ - Italian
+ - Japanese
+ - Korean
+ - Portuguese (Brazilian)
+ - Russian
+ - Chinese (Simplified)
+ - Chinese (Traditional)
+
+Note that these are automatic translations - I can't speak other languages, so any localization assistance is more than welcome. [If you can contribute to localization, head over to GitHub](https://github.com/DanielSantoro/wc-password-strength-settings).
 
 = Notes =
 
@@ -54,13 +67,21 @@ A: This is the most common question I get, and the short answer is I don't know,
 = Q: This allows weak passwords during account creation in checkout - what gives? =
 A: This is unfortunately unavoidable. As of writing, WooCommerce doesn't validate the password strength in the checkout page, so while the strength meter will show it _doesn't_ enforce it. This isn't something I'm able to work around, so share that you want validation on the password strength requirements in the official WooCommerce [Ideas Board](http://ideas.woocommerce.com/forums/133476-woocommerce) - once it's active in WooCommerce, it will automatically be active here. :)
 
+= Q: My site was recently hacked. Is this plugin vulnerable, or does it cause vulnerabilities? =
+A: No, this plugin does not create any vulnerabilities. It does create additional displays for the _client-side_ (in the user's browser), but not server-side where vulnerabilities are found. It is using the Password Strength Meter that is already in WordPress, and doesn't store or handle any information - WordPress or WooCommerce are the only ones that see and manage passwords, not this plugin. For security advice, please [check out this older but still valid security 101 guide I've written](https://danielsantoro.com/locking-down-wordpress-security-101/).
+
 = Q: Where can I go if I find an issue or want to recommend a feature? =
 A: If you experience any issues, please [let the developer know](https://danielsantoro.com/support/?utm_source=pw-strength-plugin&utm_medium=plugin-readme). If you have ideas for future features or improvements, head over to [GitHub to see if something is in development or to help contribute](https://github.com/DanielSantoro/wc-password-strength-settings).
 
 = Q: Dang, this is pretty awesome. Where can I see some of your other stuff? =
-A: Two places! You can check out the Danny's personal site at [DanielSantoro.com](https://danielsantoro.com?utm_source=pw-strength-plugin&utm_medium=plugin-readme), or follow Rynaldo on his [WordPress.org page](https://profiles.wordpress.org/rynald0s/).
+A: You can check out the Danny's personal site at [DanielSantoro.com](https://danielsantoro.com?utm_source=pw-strength-plugin&utm_medium=plugin-readme). He doesn't keep up with it as much as he'd like, but it's there.
 
 == Changelog ==
+
+= 6/30/2020 - Version 2.2.0 =
+ * Added localization for various languages
+ * Confirmed compatibility with the latest WordPress and WooCommerce versions
+ * FAQ update RE: Security
 
 = 4/25/2019 - Version 2.1.0 =
  * Enabled localization for all text in the plugin's admin section.

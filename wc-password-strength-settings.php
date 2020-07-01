@@ -5,12 +5,12 @@
  Description: Allows administrators to set the required password strength for new accounts, change messaging and display options, or disable requirements entirely from the WooCommerce Accounts menu.
  Author: Daniel Santoro
  Author URI: https://danielsantoro.com
- Version: 2.1.0
+ Version: 2.2.0
  License: GPLv2 or later
  Text Domain: wc-password-strength-settings
  Domain Path: /languages
  WC requires at least: 2.6.0
- WC tested up to: 3.7.0
+ WC tested up to: 4.2.2
  */
 
 /**
@@ -51,8 +51,9 @@ if(!defined('WCPSS_VAR_PREFIX')) {
 define( 'project_domain', 'https://danielsantoro.com' );
 define( 'analytics_source', '?utm_source=pw-strength-plugin&utm_medium=plugin-overview-link' );
 define( 'github', 'https://github.com/DanielSantoro/wc-password-strength-settings/' );
+define( 'donate', 'https://www.paypal.me/dannysantoro')
 function wcpss_add_plugin_links( $links ) {
-    $new_links = '<a href="'.github.'wiki/Documentation/" target="_blank">' . __( 'Documentation' ) . '</a>' . ' | ' . '<a href="'.project_domain.'/support/'.analytics_source.'" target="_blank">' . __( 'Help' ) . '</a>';
+    $new_links = '<a href="'.github.'wiki/Documentation/" target="_blank">' . __( 'Documentation' ) . '</a>' . ' | ' . '<a href="'.project_domain.'/support/'.analytics_source.'" target="_blank">' . __( 'Contact Support' ) . '</a>' . ' | ' . '<a href="'.donate.'" target="_blank">' . __( 'Donate' ) . '</a>';
     array_push( $links, $new_links );
   	return $links;
 }
