@@ -1,29 +1,29 @@
 <?php
 /*
- Plugin Name: WC Password Strength Settings
+ Plugin Name: Password Strength Settings for WooCommerce
  Plugin URI: https://danielsantoro.com/project/woocommerce-password-strength-settings-plugin
- Description: Allows administrators to set the required password strength for new accounts, change messaging and display options, or disable requirements entirely from the WooCommerce Accounts menu.
+ Description: Allows administrators to set the required password strength for new accounts, change messaging and display options, or disable requirements entirely from the "WooCommerce &rsaquo; Settings &rsaquo; Accounts & Privacy" menu.
  Author: Daniel Santoro
  Author URI: https://danielsantoro.com
- Version: 2.2.0
+ Version: 3.0.0
  License: GPLv2 or later
  Text Domain: wc-password-strength-settings
  Domain Path: /languages
- WC requires at least: 2.6.0
- WC tested up to: 4.2.2
+ WC requires at least: 5.5
+ WC tested up to: 6.7.1
  */
 
 /**
  * Plugin Definitions
  * 
- * @package WC Password Strength Settings
+ * @package Password Strength Settings for WooCommerce
  * @since 1.2.0
  */
 if( !defined( 'WCPSS_DIR' ) ) {
   define( 'WCPSS_DIR', dirname( __FILE__ ) );           // Plugin directory
 }
 if( !defined( 'WCPSS_VERSION' ) ) {
-  define( 'WCPSS_VERSION', '2.0.1' );                   // Plugin Version
+  define( 'WCPSS_VERSION', '2.2.2' );                   // Plugin Version
 }
 if( !defined( 'WCPSS_URL' ) ) {
   define( 'WCPSS_URL', plugin_dir_url( __FILE__ ) );    // Plugin URL
@@ -44,21 +44,17 @@ if(!defined('WCPSS_VAR_PREFIX')) {
   define('WCPSS_VAR_PREFIX', '_WCPSS_');                // Variable Prefix
 }
 
-
 /**
- * Add custom action links on the plugin screen.
+ * Add then print additional links to the plugin meta row
  */
-define( 'project_domain', 'https://danielsantoro.com' );
-define( 'analytics_source', '?utm_source=pw-strength-plugin&utm_medium=plugin-overview-link' );
-define( 'github', 'https://github.com/DanielSantoro/wc-password-strength-settings/' );
-define( 'donate', 'https://www.paypal.me/dannysantoro');
-function wcpss_add_plugin_links( $links ) {
-    $new_links = '<a href="'.github.'wiki/Documentation/" target="_blank">' . __( 'Documentation' ) . '</a>' . ' | ' . '<a href="'.project_domain.'/support/'.analytics_source.'" target="_blank">' . __( 'Contact Support' ) . '</a>' . ' | ' . '<a href="'.donate.'" target="_blank">' . __( 'Donate' ) . '</a>';
-    array_push( $links, $new_links );
-  	return $links;
+function wcpss_plugin_meta_links( $links, $file ) {
+	if ( $file === 'wc-password-strength-settings/wc-password-strength-settings.php' ) {
+		$links[] = '<a href="https://github.com/DanielSantoro/wc-password-strength-settings/wiki/" target="_blank" title="Read the Documentation"><span class="dashicons dashicons-info"></span> Documentation</a>';
+    $links[] = '<a href="https://danielsantoro.com/support/?utm_source=pw-strength-plugin&utm_medium=plugin-overview-link" target="_blank" title="Contact Support"><span class="dashicons dashicons-editor-help"></span> Support</a>';
+	}
+	return $links;
 }
-$plugin = plugin_basename( __FILE__ );
-add_filter( "plugin_action_links_$plugin", 'wcpss_add_plugin_links' );
+add_filter( 'plugin_row_meta', 'wcpss_plugin_meta_links', 10, 2 );
 
 
 /**
@@ -68,13 +64,21 @@ register_activation_hook( __FILE__, 'wcpss_install' );
 
 function wcpss_install(){
   
-}
+};
 
 register_deactivation_hook( __FILE__, 'wcpss_uninstall');
 
 function wcpss_uninstall(){
   
+};
+
+/**
+ * Make Translation Ready
+ */
+function wcpss_plugin_init() {
+  load_plugin_textdomain( 'wc-password-strength-settings', false, 'wc-password-strength-settings/languages' );
 }
+add_action('init', 'wcpss_plugin_init');
 
 /**
  * Global Class
@@ -96,7 +100,7 @@ function wcpss_change_password_strength() {
     $strength=get_option( 'woocommerce_myaccount_password_strength', null );
     return intval($strength);
     
-}
+};
 
 /**
  * Change Password Hint Text based on User Input
@@ -110,7 +114,7 @@ function wcpss_change_password_hint( $hint ) {
     $hint = $woocommerce_hint_text;
   }
   return $hint;
-}
+};
 
 /** 
  * Display Custom Messaging
@@ -125,17 +129,16 @@ function wcpss_load_scripts() {
         'strong' => __( get_option( 'woocommerce_password_strength_label_5', null ) ),
         'mismatch' => __( 'Your passwords do not match, please re-enter them.' )
     ) );
+};
+
+// add plugin upgrade notification
+add_action('in_plugin_update_message-wc-password-strength-settings/wc-password-strength-settings.php', 'wcpss_showUpgradeNotification', 10, 2);
+
+function wcpss_showUpgradeNotification($currentPluginMetadata, $newPluginMetadata){
+   // check "upgrade_notice"
+   if (isset($newPluginMetadata->upgrade_notice) && strlen(trim($newPluginMetadata->upgrade_notice)) > 0){
+        echo esc_html( '<p style="background-color: #e2e3e5; padding: 10px; color: #383d41; margin-top: 10px; border: thin solid #d6d8db;"><strong>Update Notice:</strong>' );
+        echo esc_html($newPluginMetadata->upgrade_notice);
+        echo esc_html( '</p>' );
+   }
 }
-
-/**
- * Localization - Non-functional since 2.0. Needs re-work, legacy code saved as placeholder.
- */
-
-// add_filter( 'wc_password_strength_meter_params', 'wcpss_strength_meter_custom_strings' );
-// function wcpss_strength_meter_custom_strings( $data ) {
-//     $data_new = array(
-//         'i18n_password_error'   => esc_attr__( get_option( 'woocommerce_password_error', null ), 'woocommerce' ),
-//         'i18n_password_hint'    => esc_attr__( get_option( 'woocommerce_password_hint', null ), 'woocommerce' ),
-//     );
-//     return array_merge( $data, $data_new );
-// }
