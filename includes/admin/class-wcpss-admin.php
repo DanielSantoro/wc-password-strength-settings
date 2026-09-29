@@ -197,11 +197,11 @@ class wcpss_Admin {
 	}
 
 		public function wcpss_display_settings() {
-		
-		$woocommerce_level_2 = get_option( 'wcpss_color_2' );
-		$woocommerce_level_3 = get_option( 'wcpss_color_3' );
-		$woocommerce_level_4 = get_option( 'wcpss_color_4' );
-		$woocommerce_level_5 = get_option( 'wcpss_color_5' );
+
+		$woocommerce_level_2 = sanitize_hex_color( get_option( 'wcpss_color_2' ) );
+		$woocommerce_level_3 = sanitize_hex_color( get_option( 'wcpss_color_3' ) );
+		$woocommerce_level_4 = sanitize_hex_color( get_option( 'wcpss_color_4' ) );
+		$woocommerce_level_5 = sanitize_hex_color( get_option( 'wcpss_color_5' ) );
 		
 		$css ='<style>';
 			if( !empty( $woocommerce_level_2 ) ) {
